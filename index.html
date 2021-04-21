@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic TacToe</title>
+    <link rel="stylesheet" href="caro.css">
+</head>
+<body>
+<table id="demo" border="1px" cellspacing="0"></table>
+<script>
+    let turn = 1;
+
+    function greatBoard() {
+        let str = '';
+        for (let i = 0; i < 3; i++) {
+            str += '<tr>';
+            for (let j = 0; j < 3; j++) {
+                str += `<td id='cell-${i}-${j}' onclick="clickCell(${i},${j})"></td>`;
+            }
+            str += '</tr>';
+        }
+        document.getElementById('demo').innerHTML = str;
+
+    }
+
+    greatBoard();
+
+
+    function clickCell(x, y) {
+        let cell = document.getElementById(`cell-${x}-${y}`);
+        if (cell.innerHTML === '') {
+            if (turn === 1) {
+                cell.innerHTML = 'X';
+
+                turn = 2;
+            } else {
+                cell.innerHTML = 'O';
+
+
+                turn = 1;
+            }
+            checkWin(x,y);
+        }
+
+    }
+
+    function getValueCell(x, y) {
+        if (x < 0 || x >= 3 || y < 0 || y >= 3) {
+            return '';
+        }
+        let cell = document.getElementById(`cell-${x}-${y}`);
+        return cell.innerHTML;
+    }
+
+
+    function checkWin(x, y) {
+        checkNgang(x, y);
+        checkDoc(x, y);
+        checkCheo1(x, y);
+        checkCheo2(x, y);
+    }
+
+    function checkNgang(x, y) {
+        let count = 1;
+        let i = 1
+        while (getValueCell(x, y) === getValueCell(x, y + i)) {
+            count++;
+            i++;
+        }
+        let j = 1;
+        while (getValueCell(x, y) === getValueCell(x, y + j)) {
+            count++;
+            j++;
+        }
+        if (count >= 3) {
+            alert('You Win');
+        }
+    }
+
+    function checkDoc(x, y) {
+        let count = 1;
+        let i = 1
+        while (getValueCell(x, y) === getValueCell(x - i, y)) {
+            count++;
+            i++;
+        }
+        let j = 1;
+        while (getValueCell(x, y) === getValueCell(x + i, y)) {
+            count++;
+            j++;
+        }
+        if (count >= 3) {
+            alert('You Win');
+
+        }
+    }
+
+    function checkCheo1(x, y) {
+        let count = 1;
+        let i = 1
+        while (getValueCell(x, y) === getValueCell(x - i, y + i)) {
+            count++;
+            i++;
+        }
+        let j = 1;
+        while (getValueCell(x, y) === getValueCell(x + i, y - j)) {
+            count++;
+            j++;
+        }
+        if (count >= 3) {
+            alert('You Win');
+        }
+    }
+
+    function checkCheo2(x, y) {
+        let count = 1;
+        let i = 1
+        while (getValueCell(x, y) === getValueCell(x + i, y + i)) {
+            count++;
+            i++;
+        }
+        let j = 1;
+        while (getValueCell(x, y) === getValueCell(x - i, y - j)) {
+            count++;
+            j++;
+        }
+        if (count >= 3) {
+            alert('You Win');
+        }
+    }
+
+
+</script>
+</body>
+</html>
